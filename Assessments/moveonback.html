@@ -1,0 +1,141 @@
+<html>
+    <head>
+        <title>ADD AND DELETE</title>
+    </head>
+    <body>
+        <input type="text" id="lists"/>
+        <input type="button" id="btnid" name="btnname" onclick="add()" value="Add"/>
+        <div class="row">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Names</th>
+                    <th>Action</th>
+                    <th>Move on</th>
+                </tr>
+            </thead>
+            <tbody id="itm_list1">
+            </tbody>
+        </table>
+        <br>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Names</th>
+                    <th>Action</th>
+                    <th>Move on</th>
+                </tr>
+            </thead>
+            <tbody id="itm_list2">
+            </tbody>
+        </table>
+        <br>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Names</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="itm_list3">
+            </tbody>
+        </table>
+    </div>
+        <script>
+            var names=[];
+            var names1=[];
+            var names2=[];
+
+            function add(){
+                var itms=document.getElementById("lists").value;
+                var itms_len=names.length;
+                if(itms_len>10){
+                    alert("Overflow of Array");
+                }
+                else{
+                    if(itms==='' || itms===null){
+                        alert("Enter values");
+                    }
+                    else{
+                        names.push(itms);
+                        getitms();
+                    }
+                }
+            }
+            function getitms(){
+                var a=''; 
+                var b=0;
+                names.forEach(function(value,index){
+                    b=b+1;
+                    a+='<tr><td>'+b+'</td><td>'+value+'</td><td><a onclick="del('+index+')">Delete</a></td><td><input type="button" onclick="moves('+index+')" value="Move on"/></td></tr>';
+                });
+                document.getElementById("itm_list1").innerHTML=a;
+            }
+
+            function moves(id){
+                names1.push(names[id]);
+                del();
+                displaytwo();
+            }
+
+            function del(id){
+                names.splice(id,1);
+                getitms();
+            }
+
+
+            function displaytwo(id){
+                var a1='';
+                var b1=0;
+                names1.forEach(function(value1,index1){
+                    b1=b1+1;
+                    a1+='<tr><td>'+b1+'</td><td>'+value1+'</td><td><a onclick="del1('+index1+')">Delete</a></td><td><button onclick="moves1('+index1+')">Move on</button></td><td><button onclick="movesb1('+index1+')">Move back</button></td></tr>';
+                });
+                document.getElementById("itm_list2").innerHTML=a1;
+            }
+
+
+            function moves1(id){
+                names2.push(names1[id]);
+                del1();
+                displaythree();
+            }
+
+            function movesb1(id){
+                names.push(names1[id]);
+                getitms();
+                del1();
+            }
+
+            function del1(id){
+                names1.splice(id,1);
+                displaytwo();
+            }
+
+            function displaythree(id){
+                var a2='';
+                var b2=0;
+                names2.forEach(function(value2,index2){
+                    b2=b2+1;
+                    a2+='<tr><td>'+b2+'</td><td>'+value2+'</td><td><a onclick="del2('+index2+')">Delete</a></td><td><button onclick="movesb2('+index2+')">Move back</button></td></tr>';
+                });
+                document.getElementById("itm_list3").innerHTML=a2;
+            }
+
+            function movesb2(id){
+                names1.push(names2[id]);
+                displaytwo();
+                del2();
+            }
+
+            function del2(id){
+                names2.splice(id,1);
+                displaythree();
+            }
+
+        </script>
+    </body>
+</html>
